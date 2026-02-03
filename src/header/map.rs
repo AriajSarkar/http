@@ -3762,7 +3762,7 @@ mod into_header_name {
 
     impl IntoHeaderName for HeaderName {}
 
-    impl<'a> Sealed for &'a HeaderName {
+    impl Sealed for &HeaderName {
         #[inline]
         fn try_insert<T>(
             self,
@@ -3782,7 +3782,7 @@ mod into_header_name {
         }
     }
 
-    impl<'a> IntoHeaderName for &'a HeaderName {}
+    impl IntoHeaderName for &HeaderName {}
 
     impl Sealed for &'static str {
         #[inline]
@@ -3872,7 +3872,7 @@ mod as_header_name {
 
     impl AsHeaderName for HeaderName {}
 
-    impl<'a> Sealed for &'a HeaderName {
+    impl Sealed for &HeaderName {
         #[inline]
         fn try_entry<T>(self, map: &mut HeaderMap<T>) -> Result<Entry<'_, T>, TryEntryError> {
             Ok(map.try_entry2(self)?)
@@ -3888,9 +3888,9 @@ mod as_header_name {
         }
     }
 
-    impl<'a> AsHeaderName for &'a HeaderName {}
+    impl AsHeaderName for &HeaderName {}
 
-    impl<'a> Sealed for &'a str {
+    impl Sealed for &str {
         #[inline]
         fn try_entry<T>(self, map: &mut HeaderMap<T>) -> Result<Entry<'_, T>, TryEntryError> {
             Ok(HdrName::from_bytes(self.as_bytes(), move |hdr| {
@@ -3908,7 +3908,7 @@ mod as_header_name {
         }
     }
 
-    impl<'a> AsHeaderName for &'a str {}
+    impl AsHeaderName for &str {}
 
     impl Sealed for String {
         #[inline]
@@ -3928,7 +3928,7 @@ mod as_header_name {
 
     impl AsHeaderName for String {}
 
-    impl<'a> Sealed for &'a String {
+    impl Sealed for &String {
         #[inline]
         fn try_entry<T>(self, map: &mut HeaderMap<T>) -> Result<Entry<'_, T>, TryEntryError> {
             self.as_str().try_entry(map)
@@ -3944,7 +3944,7 @@ mod as_header_name {
         }
     }
 
-    impl<'a> AsHeaderName for &'a String {}
+    impl AsHeaderName for &String {}
 }
 
 #[test]
